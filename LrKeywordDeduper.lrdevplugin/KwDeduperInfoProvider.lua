@@ -13,13 +13,12 @@ function KwDeduperInfoProvider.sectionsForTopOfDialog(viewFactory, propertyTable
 
    return {
    {
-      title = LOC '$$$/LrKwDeduper/Settings/Title=Settings for keyword deduper script',
+      title = LOC '$$$/LrKeywordDeduper/Preferences/SettingsTitle=Settings for keyword deduper script',
 
       viewFactory:row {
-         spacing = viewFactory:label_spacing(),
          viewFactory:static_text {
-            width_in_chars = 90,
-            height_in_lines = 7,
+            width_in_chars = 80,
+            height_in_lines = 8,
             title = PluginAbout
          },
       },
@@ -27,7 +26,7 @@ function KwDeduperInfoProvider.sectionsForTopOfDialog(viewFactory, propertyTable
       viewFactory:row {
          spacing = viewFactory:label_spacing(),
          viewFactory:static_text {
-            title = LOC '$$$/LrKwDeduper/Settings/DuplicateKeywordsFile=Redundant Keywords Report name',
+            title = LOC '$$$/LrKeywordDeduper/Preferences/DuplicateKeywordsFile=Redundant Keywords Report name',
             tooltip = 'The output file will be stored in the documents directory, but you can name it here.',
             alignment = 'right',
          },
@@ -39,26 +38,26 @@ function KwDeduperInfoProvider.sectionsForTopOfDialog(viewFactory, propertyTable
             value = bind { key = 'RedundantKeywordsFile', object = prefs },
          },
       },
-         
+
       viewFactory:separator { fill_horizontal = 1 },
       viewFactory:row {
          spacing = viewFactory:control_spacing(),
       -- Ignore case when comparing keywords
          viewFactory:checkbox {
-            title = LOC '$$$/IptcCodeHelper/Settings/ignoreCase=Ignore text case when comparing keyword names',
+            title = LOC '$$$/IptcCodeHelper/Preferences/ignoreCase=Ignore text case when comparing keyword names',
             tooltip = 'Ignore text case means that "DOG", "dog", and "Dog" would all be seen as the same',
             value = bind { key = 'ignore_case', object = prefs },
          },
       },
-         
+
       viewFactory:row {
          spacing = viewFactory:label_spacing(),
 
          viewFactory:static_text {
-            title = LOC '$$$/ClarifaiTagger/Settings/ignoreKeywordBranches=Ignore keywords branches:',
+            title = LOC '$$$/ClarifaiTagger/Preferences/ignoreKeywordBranches=Ignore keywords branches:',
             tooltip = 'Comma-separated list of keyword terms to ignore (including chilren and descendants).',
             alignment = 'left',
-            width = share 'title_width',
+            -- width = share 'title_width',
          },
 
          viewFactory:edit_field {
@@ -71,21 +70,21 @@ function KwDeduperInfoProvider.sectionsForTopOfDialog(viewFactory, propertyTable
          },
       },
    },
-   }
+   };
 end
 
 function KwDeduperInfoProvider.sectionsForBottomOfDialog(viewFactory, propertyTable)   
    return {
       {
-         title = LOC '$$$/LrKwDeduper/Settings/License=Copyright and License',
-         viewFactory:static_text {
-            width_in_chars = 80,
-            height_in_lines = 13,
-            title = PluginLicense
-         }
+         title = LOC '$$$/LrKeywordDeduper/Preferences/CopyrightTitle=Copyright and License',
+            viewFactory:static_text {
+               width_in_chars = 80,
+               height_in_lines = 6,
+               title = PluginLicense
+            }
       }
-   }
+   };
 end
 
-return LrKwDeduperInfoProvider
+return KwDeduperInfoProvider
 

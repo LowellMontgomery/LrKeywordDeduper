@@ -143,10 +143,10 @@ function kwInTable(kw, tb)
     return false
 end
 
-function logRedundantKeyword(term, redKeys)
+function logRedundantKeyword(term, redKeys, counter)
    -- Output is initialized at the top
    if output ~= '' then output = output .. "\n\n" end
-   output = output .. '"Redundant term: "' .. term
+   output = output .. 'Redundant term ' .. counter .. ': "' .. term .. '"'
    local compare = compareLowerCase and string.lower(term) or term
    for i, kw in ipairs(redKeys) do
 
@@ -172,11 +172,14 @@ function logRedundantKeyword(term, redKeys)
 end
 
 function printRedundantKeywordsTable()
+    counter = 0
     for term, keywords in pairs(redundantKeywords) do
-        logRedundantKeyword(term, keywords)
+        counter = counter + 1
+        logRedundantKeyword(term, keywords, counter)
     end
     
     writeFile(output, outputFilename)
+    return counter;
 end
 
 
@@ -187,13 +190,13 @@ function getAncestryString(kw, ancestryString)
         ancestryString = parent:getName() .. " | " .. ancestryString
         ancestryString = getAncestryString(parent, ancestryString)
     end
-    return ancestryString
+    return ancestryString;
 end
 
 -- Return a comma-separated string listing all children of a term
 function getChildrenString(kw)
     local childNamesTable = getKeywordChildNamesTable(kw)
-    if #childNamesTable > 0
+    if #childNamesTable > 0 then
         return table.concat(childNamesTable, ", ")
     else return ""
     end
@@ -208,7 +211,7 @@ function getKeywordChildNamesTable(parentKey)
        childNames = getKeywordNames(kchildren)
     end
     -- Return the table of child terms (empty if no child terms for passed keyword)
-    return childNames
+    return childNames;
 end
 
 
@@ -222,7 +225,7 @@ function tableMerge(t1, t2)
             t1[k] = v
         end
     end
-    return t1
+    return t1;
 end
 
 -- Get names of all Keyword objects in a table
@@ -231,7 +234,7 @@ function getKeywordNames(keywords)
     for i, kw in pairs(keywords) do
        names[#names +1] = kw:getName() 
     end
-    return names
+    return names;
 end
 
 
@@ -250,8 +253,8 @@ LrTasks.startAsyncTask (function()          -- Certain functions in LR which acc
          end
       end
       
-      printRedundantKeywordsTable()
+      local numFound = printRedundantKeywordsTable()
       
-      message = "Found  " .. #redundantKeywords .. " keyword pairs or groups. (See '" .. outputFilename .. "' on your desktop)"
+      message = "Found  " .. numFound .. " keyword pairs or groups. (See '" .. outputFilename .. "' on your desktop)"
       LrDialogs.message(message)
    end)
