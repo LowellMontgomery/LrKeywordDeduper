@@ -8,82 +8,102 @@ local PluginLicense = 'Copyright © 2016 Lowell Montgomery / www.lowemo.photo\n\
 local KwDeduperInfoProvider = {}
 
 function KwDeduperInfoProvider.sectionsForTopOfDialog(viewFactory, propertyTable)
-   local prefs = LrPrefs.prefsForPlugin(_PLUGIN.id)
-   local bind = LrView.bind
+    local prefs = LrPrefs.prefsForPlugin(_PLUGIN.id)
+    local bind = LrView.bind
 
-   return {
-   {
-      title = LOC '$$$/LrKeywordDeduper/Preferences/SettingsTitle=Settings for keyword deduper script',
+    return {
+    {
+        title = LOC '$$$/LrKeywordDeduper/Preferences/SettingsTitle=Settings for keyword deduper script',
 
-      viewFactory:row {
-         viewFactory:static_text {
-            width_in_chars = 80,
-            height_in_lines = 8,
-            title = PluginAbout
-         },
-      },
+        viewFactory:row {
+            viewFactory:static_text {
+                width_in_chars = 80,
+                height_in_lines = 8,
+                title = PluginAbout
+            },
+        },
 
-      viewFactory:row {
-         spacing = viewFactory:label_spacing(),
-         viewFactory:static_text {
-            title = LOC '$$$/LrKeywordDeduper/Preferences/DuplicateKeywordsFile=Redundant Keywords Report name',
-            tooltip = 'The output file will be stored in the documents directory, but you can name it here.',
-            alignment = 'right',
-         },
+        viewFactory:row {
+            spacing = viewFactory:label_spacing(),
+            viewFactory:static_text {
+                title = LOC '$$$/LrKeywordDeduper/Preferences/DuplicateKeywordsFile=Redundant Keywords Report name',
+                tooltip = 'The output file will be stored in the documents directory, but you can name it here.',
+                alignment = 'right',
+            },
          -- Name of report file output to the desktop
-         viewFactory:edit_field {
-            tooltip = 'The output file will be stored on your desktop by the name you choose here.',
-            fill_horizonal = 1,
-            width_in_chars = 35,
-            value = bind { key = 'RedundantKeywordsFile', object = prefs },
-         },
-      },
+            viewFactory:edit_field {
+                tooltip = 'The output file will be stored on your desktop by the name you choose here.',
+                fill_horizonal = 1,
+                width_in_chars = 35,
+                value = bind { key = 'RedundantKeywordsFile', object = prefs },
+            },
+        },
 
-      viewFactory:separator { fill_horizontal = 1 },
-      viewFactory:row {
-         spacing = viewFactory:control_spacing(),
-      -- Ignore case when comparing keywords
-         viewFactory:checkbox {
-            title = LOC '$$$/IptcCodeHelper/Preferences/ignoreCase=Ignore text case when comparing keyword names',
-            tooltip = 'Ignore text case means that "DOG", "dog", and "Dog" would all be seen as the same',
-            value = bind { key = 'ignore_case', object = prefs },
-         },
-      },
+        viewFactory:separator { fill_horizontal = 1 },
+        viewFactory:row {
+            spacing = viewFactory:control_spacing(),
+        -- Ignore case when comparing keywords
+            viewFactory:checkbox {
+                title = LOC '$$$/IptcCodeHelper/Preferences/ignoreCase=Ignore text case when comparing keyword names',
+                tooltip = 'Ignore text case means that "DOG", "dog", and "Dog" would all be seen as the same',
+                value = bind { key = 'ignore_case', object = prefs },
+            },
+        },
 
-      viewFactory:row {
-         spacing = viewFactory:label_spacing(),
+        viewFactory:row {
+            spacing = viewFactory:label_spacing(),
 
-         viewFactory:static_text {
-            title = LOC '$$$/ClarifaiTagger/Preferences/ignoreKeywordBranches=Ignore keyword branches:',
-            tooltip = 'Comma-separated list of keyword terms to ignore (including chilren and descendants).',
-            alignment = 'left',
-            -- width = share 'title_width',
-         },
+            viewFactory:static_text {
+                title = LOC '$$$/ClarifaiTagger/Preferences/ignoreKeywordBranches=Ignore keyword branches:',
+                tooltip = 'Comma-separated list of keyword terms to ignore (including chilren and descendants).',
+                alignment = 'left',
+                -- width = share 'title_width',
+            },
 
-         viewFactory:edit_field {
-            tooltip = 'Comma-separated list of keyword terms to ignore (including chilren and descendants).',
-            width_in_chars = 35,
-            height_in_lines = 4,
-            enabled = true,
-            alignment = 'left',
-            value = bind { key = 'ignoreKeywordTreeBranches', object = prefs },
-         },
-      },
-   },
-   };
+            viewFactory:edit_field {
+                tooltip = 'Comma-separated list of keyword terms to ignore (including chilren and descendants).',
+                width_in_chars = 35,
+                height_in_lines = 4,
+                enabled = true,
+                alignment = 'left',
+                value = bind { key = 'ignoreKeywordTreeBranches', object = prefs },
+            },
+        },
+    },
+    };
 end
 
-function KwDeduperInfoProvider.sectionsForBottomOfDialog(viewFactory, propertyTable)   
-   return {
-      {
-         title = LOC '$$$/LrKeywordDeduper/Preferences/CopyrightTitle=Copyright and License',
+function KwDeduperInfoProvider.sectionsForBottomOfDialog(viewFactory, propertyTable)
+    local KwUtilsAttribution = require 'KwUtils'.Attribution
+    local LutilsAttribution = require 'LUTILS'.Attribution
+    return {
+        {
+            title = LOC '$$$/LrKeywordDeduper/Preferences/CopyrightTitle=Copyright and License',
+                viewFactory:static_text {
+                    width_in_chars = 80,
+                    height_in_lines = 6,
+                    title = PluginLicense
+                },
             viewFactory:static_text {
-               width_in_chars = 80,
-               height_in_lines = 6,
-               title = PluginLicense
-            }
-      }
-   };
+                title = LOC '$$$/ClarifaiTagger/Settings/KwUtils=KwUtils: Keyword Utility Functions for Lightroom',
+            },
+            viewFactory:edit_field {
+                width_in_chars = 80,
+                height_in_lines = 5,
+                enabled = false,
+                value = KwUtilsAttribution
+            },
+            viewFactory:static_text {
+                title = LOC '$$$/ClarifaiTagger/Settings/Lutils=LUTILS: Lua Utility Functions for Lightroom',
+            },
+            viewFactory:edit_field {
+                width_in_chars = 80,
+                height_in_lines = 5,
+                enabled = false,
+                value = LutilsAttribution
+            }      
+        }
+    };
 end
 
 return KwDeduperInfoProvider

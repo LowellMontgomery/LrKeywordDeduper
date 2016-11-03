@@ -27,6 +27,9 @@ local LUTILS = {}
 LUTILS.VERSION = 20161101.01 -- version history at end of file
 LUTILS.AUTHOR_NOTE = "LUTILS.lua--Lua utility functions by Lowell Montgomery (https://lowemo.photo/lightroom-lua-utils) version: " .. LUTILS.VERSION
 
+-- The following provides an 80 character-width attribution text that can be inserted for display
+-- in a plugin derived using these helper functions.
+LUTILS.Attribution = "This plugin uses LUTILS, Lua utilities, © 2016 by Lowell Montgomery\n (https://lowemo.photo/lightroom-lua-utils) version: " .. LUTILS.VERSION .. "\n\nThis code is released under a Creative Commons CC-BY “Attribution” License:\n http://creativecommons.org/licenses/by/3.0/deed.en_US"
 
 -- Check simple table for a given value's presence
 function LUTILS.inTable (val, t)
@@ -43,20 +46,20 @@ end
 -- Given a string and delimiter (e.g. ', '), break the string into parts and return as table
 -- This works like PHP's explode() function.
 function LUTILS.split(s, delim)
-   if (delim == '') then return false end
-   local pos = 0
-   local t = {}
+    if (delim == '') then return false end
+    local pos = 0
+    local t = {}
    -- For each delimiter found, add to return table
-   for st, sp in function() return string.find(s, delim, pos, true) end do
+    for st, sp in function() return string.find(s, delim, pos, true) end do
       -- Get chars to next delimiter and insert in return table
-      t[#t + 1] = string.sub(s, pos, st - 1)
+        t[#t + 1] = string.sub(s, pos, st - 1)
       -- Move past the delimiter
-      pos = sp + 1
-   end
+        pos = sp + 1
+    end
    -- Get chars after last delimiter and insert in return table
-   t[#t + 1] = string.sub(s, pos)
+    t[#t + 1] = string.sub(s, pos)
 
-   return t;
+    return t;
 end
 
 -- Merge two tables (like PHP array_merge())
@@ -70,12 +73,5 @@ function LUTILS.tableMerge(t1, t2)
     end
     return t1;
 end
-
--- Basic trim functionality to remove whitespace from either end of a string
-function LUTILS.trim(s)
-   if s == nil then return nil end
-   return string.gsub(s, '^%s*(.-)%s*$', '%1');
-end
-
 
 return LUTILS;
