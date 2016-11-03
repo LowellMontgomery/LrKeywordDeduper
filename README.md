@@ -1,7 +1,7 @@
 # LrKwDeduper - (Lightroom Keyword Deduper)
-The lofty goal for this project is to build up functionality which helps streamline the workflow of merging duplicate keywords (keywords by the same name and with the same meaning/context in a hierarchical keyword list).
+The lofty goal for this project is to build up functionality which helps streamline the workflow of merging duplicate keywords (keywords by the same name and with the same meaning/context in a hierarchical keyword list); this is easier said than done. Providing a "merge function" for keywords has long been one of the most requested features, but Adobe still has not implemented a built-in way of doing it, and the support they have for developers to operate on keywords is actually still a bit too limited to do anything in a very ideal manner.
 
-Currently, this plugin only *identifies* duplicate keywords and prints out a report that includes the number of photos associated with each keyword, any synonyms and/or child terms as well as the "ancestry path" for each keyword (parent terms up to the top level)
+Currently, this plugin only *identifies* duplicate keywords and prints out a report that includes the number of photos associated with each keyword, any synonyms and/or child terms, and the "ancestry path" for each keyword (parent terms up to the top level).
 
 ## The problem: Duplicate keywords cause fragmentation in searches
  My personal interest when designing this plugin was to improve the structure of my keyword vocabulary by finding any areas of unintended overlap in my keyword hierarchy and merging them, wherever possible. The main purpose was that then I could use AI auto-tagging solutions, tweaked to work with a hierarchical keyword list, with as few duplicate terms as possible.
