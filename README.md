@@ -34,12 +34,33 @@ Alternatively, you can use the Plugin Manager to install a Lightroom plugin whic
 5. You should now see that the plugin is “installed and running”
 ![Lightroom Plugin Manager: Plugin Installed and Running](lightroom-plugin-manager-installed-running.png "In the plugin manager, you should now see that the Lightroom Keyword Deduper plugin is “installed and running”")
 
-### Preparing to use the Lightroom Keyword Deduper
-For now, settings for this plugin are only visible in the Plugin Manager; read on…
+## Preparing to use the Lightroom Keyword Deduper
+For now, settings for this plugin are only visible in the Plugin Manager and are fairly limited. In the future, it may be that a UI will be available to help with merging keyword pairs (including synonyms, photo assignments, etc), but Adobe's Lightroom API does not provide a way for plugin developers to actually delete a keyword or to re-assign a keyword's parent, so whatever the future holds, there are some serious limitations to what a plugin like this one could do. For now, though, hopefully you'll find this plugin to be helpful if you need an overview of what might need some work.
 
-#### Settings in the Lightroom Plugin Manager
+### Settings in the Lightroom Plugin Manager
+![Lightroom Keyword Deduper Settings](lightroom-keyword-deduper-settings.png "There are currently only three settings for this plugin")
 
+There are currently only three settings for the plugin:
+1. The report name (default is `Lightroom-Redundant-Keywords-report.txt`) Generated reports will show up on the desktop.
+2. `Ignore text case when comparing keyword names` Keeping this selected (default setting) means that "dog" and "Dog" will "match" as duplicate keywords. You probably will not want to change this behavior, but you can uncheck this box if you do wish to.
+3. `Ignore keyword branches` Provides a text area where you may enter a comma-separated list of keyword branches to ignore when generating your report. These are keywords which, when analyzing your keyword hierarchy will be skipped over, including all descendants (child keywords, etc). You might, for instance, have long lists of bird names or plant names which produce matches against terms that are totally unrelated. Or you might have location-specific keyword hierarchies, with multiple sub-location keywords called "downtown". If you can, it may still help your keywording workflow to change some names of such matching terms (you could put the original name in as a synonym). Doing so may help various automations and help in searches for a keyword using Lightroom's "filter". In any case, entering appropriate terms here can improve performance (time required to generate the report) and improve the relevance of results, so you can focus on particular areas of your keyword hierarchy.
 
-### Using the Lightroom Keyword Deduper Lightroom Plugin
-Once the plugin is configured and running, it’s simply a matter selecting the menu item, `Library > Plugin Extras > Keyword Deduper`:
+## Using the Lightroom Keyword Deduper Lightroom Plugin
+Once the plugin is configured and running, it’s simply a matter of selecting the menu item, `Library > Plugin Extras > Find duplicate keywords`
 
+![Running the Keyword Deduper](lightroom-find-duplicate-keywords.jpg "Generate a report by triggering the menu item.")
+
+After a moment or two, perhaps longer if you have a really long keyword list, you should see the message that the process has completed including the number of "duplicate keyword" groups which were found. You should find a report on your desktop named according to your setting (by default: `Lightroom-Redundant-Keywords-report.txt`)
+
+For each keyword, the report includes parents/ancestors, synonyms, the number of photos which are tagged with the keyword, and at least a partial list of children, if any. Following is an example excerpt from such a report:
+
+```
+Redundant term 2: "summer"
+    In: _Season-and-time | _SEASON with 87 photos
+    In: new keywords with 22 photos
+
+Redundant term 3: "analysis"
+    In: _IPTC-GENRE with 0 photos
+    In: _IPTC-MEDIA-SUBJECT | science and technology | research with 0 photos
+
+```

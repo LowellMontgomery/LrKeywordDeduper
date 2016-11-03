@@ -54,7 +54,7 @@ function KwDeduperInfoProvider.sectionsForTopOfDialog(viewFactory, propertyTable
          spacing = viewFactory:label_spacing(),
 
          viewFactory:static_text {
-            title = LOC '$$$/ClarifaiTagger/Preferences/ignoreKeywordBranches=Ignore keywords branches:',
+            title = LOC '$$$/ClarifaiTagger/Preferences/ignoreKeywordBranches=Ignore keyword branches:',
             tooltip = 'Comma-separated list of keyword terms to ignore (including chilren and descendants).',
             alignment = 'left',
             -- width = share 'title_width',
